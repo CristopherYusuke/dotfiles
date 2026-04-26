@@ -1,46 +1,48 @@
-
 @import "mocha.css";
 
+/* 1. Remover o background-image do seletor universal para não quebrar os ícones */
 * {
-    background-image: none;
     transition: 200ms;
     font-family: "MesloLGS Nerd Font Mono Bold";
-    font-size: 16px;
 }
 
 window {
     background-color: rgba(30, 30, 46, 0.5);
 }
 
-/* 2. Reduzir o tamanho dos botões e aumentar o espaçamento entre eles */
+/* 2. Ajuste dos Botões */
 button {
     color: @text;
     background-color: @surface0;
     outline-style: none;
     border: none;
-    border-radius: 30px; /* Bordas mais arredondadas ficam melhor */
+    border-radius: 20px;
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 20%; /* Diminuir o ícone (estava em 25% ou mais) */
-    
-    /* Aumentar significativamente as margens para os botões encolherem */
-    margin: 60px; 
+    background-size: 25%; /* Ajuste o tamanho do ícone aqui */
+    margin: 40px; /* Espaço entre os botões */
 }
 
-/* 3. Ajuste para o texto não ficar colado */
+/* 3. Ajuste do Texto (Label) */
 button label {
-    margin-top: 150px; /* Empurra o texto mais para baixo do ícone */
     font-size: 20px;
+    color: @text;
+    margin-top: 110px; /* Ajuste para o texto não ficar em cima do ícone */
 }
 
+/* 4. Estados de Hover e Focus */
 button:focus,
 button:active,
 button:hover {
     background-color: @mauve;
+    background-size: 30%; /* Efeito de zoom leve no ícone ao passar o rato */
+}
+
+button:hover label {
     color: @crust;
 }
 
-/* Ícones - O wlogout procura-os por ID */
+/* 5. Ícones (Garante que o caminho está correto) */
 #lock {
     background-image: image(url("/usr/share/wlogout/icons/lock.png"));
 }
@@ -56,3 +58,4 @@ button:hover {
 #shutdown {
     background-image: image(url("/usr/share/wlogout/icons/shutdown.png"));
 }
+

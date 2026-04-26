@@ -6,7 +6,6 @@
   "margin-left": 0,
   "margin-right": 0,
   "spacing": 4, // Espaçamento global entre módulos
-
   "modules-left": [
     "hyprland/workspaces"
   ],
@@ -14,23 +13,26 @@
     "hyprland/window"
   ],
   "modules-right": [
+    "hyprland/submap", 
     "network",
     "pulseaudio",
     "clock",
     "custom/power"
   ],
-
   "hyprland/workspaces": {
     "disable-scroll": true,
     "all-outputs": true,
     "format": "{name}"
   },
-
   "hyprland/window": {
     "format": "{title}",
     "separate-outputs": true
   },
-
+  "hyprland/submap": {
+    "format": "✌️  {}", 
+    "max-length": 8,
+    "tooltip": false
+  }, 
   "network": {
     "format-wifi": "   {essid}",
     "format-ethernet": "    Connected",
@@ -55,7 +57,7 @@
 
   "custom/power": {
     "format": "⏻",
-    "on-click": "wlogout -b 2 -c 500 -r 500", 
+    "on-click": "wlogout -b 2 -L 900 -R 900 -T 400 -B 400", 
     "tooltip": false
   }
  }

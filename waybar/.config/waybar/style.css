@@ -27,6 +27,17 @@ window#waybar {
     color: @mauve;
 }
 
+#submap {
+    background-color: @red; /* Vermelho para chamar atenção */
+    color: @crust;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
 /* Estilo base para todos os módulos (O segredo do Padding está aqui) */
 #workspaces,
 #pulseaudio,
