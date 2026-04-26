@@ -1,0 +1,58 @@
+
+@import "mocha.css";
+
+* {
+    background-image: none;
+    transition: 200ms;
+    font-family: "MesloLGS Nerd Font Mono Bold";
+    font-size: 16px;
+}
+
+window {
+    background-color: rgba(30, 30, 46, 0.5);
+}
+
+/* 2. Reduzir o tamanho dos botões e aumentar o espaçamento entre eles */
+button {
+    color: @text;
+    background-color: @surface0;
+    outline-style: none;
+    border: none;
+    border-radius: 30px; /* Bordas mais arredondadas ficam melhor */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 20%; /* Diminuir o ícone (estava em 25% ou mais) */
+    
+    /* Aumentar significativamente as margens para os botões encolherem */
+    margin: 60px; 
+}
+
+/* 3. Ajuste para o texto não ficar colado */
+button label {
+    margin-top: 150px; /* Empurra o texto mais para baixo do ícone */
+    font-size: 20px;
+}
+
+button:focus,
+button:active,
+button:hover {
+    background-color: @mauve;
+    color: @crust;
+}
+
+/* Ícones - O wlogout procura-os por ID */
+#lock {
+    background-image: image(url("/usr/share/wlogout/icons/lock.png"));
+}
+
+#logout {
+    background-image: image(url("/usr/share/wlogout/icons/logout.png"));
+}
+
+#reboot {
+    background-image: image(url("/usr/share/wlogout/icons/reboot.png"));
+}
+
+#shutdown {
+    background-image: image(url("/usr/share/wlogout/icons/shutdown.png"));
+}

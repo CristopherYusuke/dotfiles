@@ -1,88 +1,86 @@
-@import "mocha.css"; 
+@import "mocha.css";
 
+/* Configurações Globais */
 * {
     font-family: "MesloLGS Nerd Font Mono Bold";
     font-size: 16px;
     min-height: 0;
     font-weight: bold;
+    border: none;
+    border-radius: 0;
 }
 
+/* Janela Principal da Waybar */
 window#waybar {
-    background: transparent;
-    background-color: @crust;
-    color: @overlay0;
+    background-color: @crust; /* Cor escura do Catppuccin */
+    color: @text;
     transition-property: background-color;
     transition-duration: 0.1s;
     border-bottom: 1px solid @overlay1;
 }
 
+/* Estilo para o Título da Janela (Centro) */
 #window {
-    margin: 8px;
-    padding-left: 8;
-    padding-right: 8;
-}
-
-button {
-    box-shadow: inset 0 -3px transparent;
-    border: none;
-    border-radius: 0;
-}
-
-button:hover {
-    background: inherit;
+    margin: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
     color: @mauve;
-    border-top: 2px solid @mauve;
 }
 
+/* Estilo base para todos os módulos (O segredo do Padding está aqui) */
+#workspaces,
+#pulseaudio,
+#clock,
+#network,
+#custom-power {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 12px;  /* Aumentei para dar o respiro que faltava */
+    padding-right: 12px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    margin-left: 6px;
+    margin-right: 6px;
+}
+
+/* --- Workspaces (Esquerda) --- */
 #workspaces button {
-    padding: 0 4px;
-}
-
-#workspaces button.focused {
-    background-color: rgba(0, 0, 0, 0.3);
-    color: @rosewater;
-    border-top: 2px solid @rosewater;
+    padding: 0 8px;
+    color: @overlay0;
 }
 
 #workspaces button.active {
-    background-color: rgba(0, 0, 0, 0.3);
     color: @mauve;
-    border-top: 2px solid @mauve;
+    border-bottom: 3px solid @mauve; /* Borda mais grossa para 4K */
+}
+
+#workspaces button.focused {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: @rosewater;
+    border-bottom: 3px solid @rosewater;
+}
+
+#workspaces button:hover {
+    background: @surface0;
+    color: @mauve;
 }
 
 #workspaces button.urgent {
-    background-color: #eb4d4b;
+    background-color: @red;
+    color: @crust;
 }
 
-#pulseaudio,
-#clock,
-#battery,
-#cpu,
-#memory,
-#disk,
-#temperature,
-#backlight,
-#wireplumber,
-#tray,
-#network,
-#mode,
-#scratchpad {
-  margin-top: 2px;
-  margin-bottom: 2px;
-  margin-left: 4px;
-  margin-right: 4px;
-  padding-left: 4px;
-  padding-right: 4px;
+/* --- Módulos da Direita (Cores e Bordas) --- */
+
+#network {
+    color: @yellow;
+    border-bottom: 2px solid @yellow;
 }
 
-#clock {
-    color: @maroon;
-    border-bottom: 2px solid @maroon;
-}
-
-#clock.date {
-    color: @mauve;
-    border-bottom: 2px solid @mauve;
+/* Se o Network estiver desconectado, muda a cor para vermelho */
+#network.disconnected {
+    color: @red;
+    border-bottom: 2px solid @red;
 }
 
 #pulseaudio {
@@ -90,38 +88,37 @@ button:hover {
     border-bottom: 2px solid @blue;
 }
 
-#network {
-    color: @yellow;
-    border-bottom: 2px solid @yellow;
+#pulseaudio.muted {
+    color: @overlay0;
+    border-bottom: 2px solid @overlay0;
 }
 
-#idle_inhibitor {
-    margin-right: 12px;
-    color: #7cb342;
+#clock {
+    color: @maroon;
+    border-bottom: 2px solid @maroon;
 }
 
-#idle_inhibitor.activated {
+/* --- Botão de Power --- */
+#custom-power {
     color: @red;
+    border-bottom: 2px solid @red;
+    margin-right: 15px; /* Espaço extra para não colar no canto da TV */
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
-#battery {
-    color: @green;
-    border-bottom: 2px solid @green;
+/* --- Outros Ajustes --- */
+#tray {
+    padding: 0 10px;
+    margin-right: 10px;
 }
 
-/* If workspaces is the leftmost module, omit left margin */
-.modules-left>widget:first-child>#workspaces {
-    margin-left: 0;
+#tray > .passive {
+    -gtk-icon-effect: dim;
 }
 
-/* If workspaces is the rightmost module, omit right margin */
-.modules-right>widget:last-child>#workspaces {
-    margin-right: 0;
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: @red;
 }
 
-#custom-vpn {
-    color: @lavender;
-    border-radius: 15px;
-    padding-left: 6px;
-    padding-right: 6px;
-}

@@ -70,7 +70,7 @@ crust = "#11111b"
 
 [os]
 disabled = false
-style = "bg:surface0 fg:text"
+style = "bg:surface0 fg:teal"
 
 [os.symbols]
 Windows = "󰍲"
@@ -87,6 +87,7 @@ Alpine = ""
 Amazon = ""
 Android = ""
 Arch = "󰣇"
+CachyOS = "󰣇"
 Artix = "󰣇"
 CentOS = ""
 Debian = "󰣚"
