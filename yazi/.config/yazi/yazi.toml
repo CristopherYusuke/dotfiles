@@ -1,0 +1,10 @@
+[manager]
+ratio = [1, 2, 4]
+sort-by = "natural"
+sort-dir-first = true
+show-hidden = false
+
+[preview]
+image-filter = "lanczos3"
+max-width = 1000
+max-height = 1000

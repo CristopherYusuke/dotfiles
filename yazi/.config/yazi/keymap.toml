@@ -1,0 +1,5 @@
+[manager]
+keymap = [
+  { on = ["g", "d"], run = "cd ~/dev", desc = "Ir para dev" },
+  { on = ["g", "D"], run = "cd ~/dotfiles", desc = "Ir para dotfiles" },
+]
