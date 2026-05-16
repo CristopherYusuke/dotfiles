@@ -5,6 +5,10 @@ return {
 		local mode = {
 			"mode",
 			fmt = function(str)
+				local reg = vim.fn.reg_recording()
+				if reg ~= "" then
+					return " recording @" .. reg
+				end
 				return " " .. str
 			end,
 		}
