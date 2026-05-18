@@ -8,8 +8,9 @@
 -- ==================
 
 local mainMod = "SUPER"
+local secondMod = "SHIFT + SUPER"
 local terminal = "kitty"
-local fileManager = "yazi"
+local fileManager = "dolphin"
 local menu = "wofi --show drun"
 
 -- ==================
@@ -18,7 +19,7 @@ local menu = "wofi --show drun"
 
 -- LG TV SSCR2 — 72" 4K @ 119.88Hz HDR (principal)
 hl.monitor({
-	output = "DP-1",
+	output = "HDMI-A-1",
 	mode = "3840x2160@119.88",
 	position = "0x0",
 	scale = 1.2,
@@ -30,7 +31,7 @@ hl.monitor({
 
 -- Samsung QCQ90S — 64" 4K @ 143.86Hz HDR (couch)
 hl.monitor({
-	output = "HDMI-A-1",
+	output = "DP-1",
 	mode = "3840x2160@143.86",
 	position = "3840x0",
 	scale = 1.5,
@@ -218,8 +219,8 @@ hl.bind(mainMod .. " + X", hl.dsp.exec_cmd("wlogout -b 2 -L 900 -R 900"))
 hl.bind(mainMod .. " + M", hl.dsp.exit())
 
 -- Session
-hl.bind("SUPER + SHIFT + l", hl.dsp.exec_cmd("hyprlock"))
-hl.bind("SUPER + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"))
+hl.bind(secondMod .. "  + l", hl.dsp.exec_cmd("hyprlock"))
+hl.bind(secondMod .. "  + R", hl.dsp.exec_cmd("hyprctl reload"))
 
 -- Screenshots
 hl.bind("SUPER + CTRL + SHIFT + S", hl.dsp.exec_cmd("hyprshot -m window"))
@@ -237,16 +238,12 @@ hl.bind(mainMod .. " + up", hl.dsp.focus({ direction = "up" }))
 hl.bind(mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
 
 -- Move windows
-hl.bind("SUPER + SHIFT + left", hl.dsp.window.move({ direction = "left" }))
-hl.bind("SUPER + SHIFT + right", hl.dsp.window.move({ direction = "right" }))
-hl.bind("SUPER + SHIFT + up", hl.dsp.window.move({ direction = "up" }))
-hl.bind("SUPER + SHIFT + down", hl.dsp.window.move({ direction = "down" }))
+hl.bind(secondMod .. " + left", hl.dsp.window.move({ direction = "left" }))
+hl.bind(secondMod .. "  + right", hl.dsp.window.move({ direction = "right" }))
+hl.bind(secondMod .. "  + up", hl.dsp.window.move({ direction = "up" }))
+hl.bind(secondMod .. "  + down", hl.dsp.window.move({ direction = "down" }))
 
 -- Resize submap
-hl.bind(mainMod .. " + r", function()
-	hl.submap("resize")
-end)
-
 -- Switch to a submap called `resize`.
 hl.bind(mainMod .. "+ r ", hl.dsp.submap("resize"))
 
@@ -266,19 +263,19 @@ end)
 for i = 1, 9 do
 	local key = tostring(i)
 	hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
-	hl.bind("SUPER + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+	hl.bind(secondMod .. "  + " .. key, hl.dsp.window.move({ workspace = i }))
 end
 -- Workspace 0 → workspace 1
 hl.bind(mainMod .. " + 0", hl.dsp.focus({ workspace = 1 }))
-hl.bind("SUPER + SHIFT + 0", hl.dsp.window.move({ workspace = 10 }))
+hl.bind(secondMod .. "  + 0", hl.dsp.window.move({ workspace = 10 }))
 
 -- Workspaces Samsung (F1-F3)
 hl.bind(mainMod .. " + F1", hl.dsp.focus({ workspace = 10 }))
 hl.bind(mainMod .. " + F2", hl.dsp.focus({ workspace = 11 }))
 hl.bind(mainMod .. " + F3", hl.dsp.focus({ workspace = 12 }))
-hl.bind("SUPER + SHIFT + F1", hl.dsp.window.move({ workspace = 10 }))
-hl.bind("SUPER + SHIFT + F2", hl.dsp.window.move({ workspace = 11 }))
-hl.bind("SUPER + SHIFT + F3", hl.dsp.window.move({ workspace = 12 }))
+hl.bind(secondMod .. " + F1", hl.dsp.window.move({ workspace = 10 }))
+hl.bind(secondMod .. " + F2", hl.dsp.window.move({ workspace = 11 }))
+hl.bind(secondMod .. " + F3", hl.dsp.window.move({ workspace = 12 }))
 
 -- ==================
 -- WORKSPACES
@@ -311,7 +308,7 @@ hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 -- Special workspace (scratchpad)
 hl.bind(mainMod .. " + S", hl.dsp.workspace.toggle_special("magic"))
-hl.bind("SUPER + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
+hl.bind(secondMod .. "  + S", hl.dsp.window.move({ workspace = "special:magic" }))
 
 -- ==================
 -- GROUPS
@@ -335,10 +332,10 @@ hl.bind(mainMod .. " + CTRL + up", hl.dsp.window.move({ into_group = "u" }))
 hl.bind(mainMod .. " + CTRL + down", hl.dsp.window.move({ into_group = "d" }))
 
 -- Move an active tab OUT of the group into a specific tiled direction
-hl.bind(mainMod .. " + CTRL + SHIFT + left", hl.dsp.window.move({ out_of_group = "l" }))
-hl.bind(mainMod .. " + CTRL + SHIFT + right", hl.dsp.window.move({ out_of_group = "r" }))
-hl.bind(mainMod .. " + CTRL + SHIFT + up", hl.dsp.window.move({ out_of_group = "u" }))
-hl.bind(mainMod .. " + CTRL + SHIFT + down", hl.dsp.window.move({ out_of_group = "d" }))
+hl.bind(secondMod .. " + CTRL + left", hl.dsp.window.move({ out_of_group = "l" }))
+hl.bind(secondMod .. " + CTRL + right", hl.dsp.window.move({ out_of_group = "r" }))
+hl.bind(secondMod .. " + CTRL + up", hl.dsp.window.move({ out_of_group = "u" }))
+hl.bind(secondMod .. " + CTRL + down", hl.dsp.window.move({ out_of_group = "d" }))
 
 -- ==================
 -- WINDOW RULES
