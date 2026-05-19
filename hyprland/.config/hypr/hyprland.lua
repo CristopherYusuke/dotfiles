@@ -10,7 +10,6 @@
 local mainMod = "SUPER"
 local secondMod = "SHIFT + SUPER"
 local terminal = "kitty"
-local fileManager = "dolphin"
 local menu = "wofi --show drun"
 
 -- ==================
@@ -23,9 +22,9 @@ hl.monitor({
 	mode = "3840x2160@119.88",
 	position = "0x0",
 	scale = 1.2,
-	bitdepth = 10,
 	cm = "hdr",
 	sdrbrightness = 1.2,
+	vrr = true,
 	sdrsaturation = 1.0,
 })
 
@@ -35,7 +34,6 @@ hl.monitor({
 	mode = "3840x2160@143.86",
 	position = "3840x0",
 	scale = 1.5,
-	bitdepth = 10,
 	cm = "hdr",
 	sdrbrightness = 1.2,
 	sdrsaturation = 1.0,
@@ -314,7 +312,6 @@ hl.bind(secondMod .. "  + S", hl.dsp.window.move({ workspace = "special:magic" }
 -- GROUPS
 -- ==================
 
--- NEW: Updated Window Grouping Dispatchers
 -- Toggle current window in/out of a group
 hl.bind(mainMod .. " + G", hl.dsp.group.toggle())
 
@@ -342,12 +339,15 @@ hl.bind(secondMod .. " + CTRL + down", hl.dsp.window.move({ out_of_group = "d" }
 -- ==================
 
 hl.window_rule({
-	name = "suppress-maximize",
+	-- Ignore maximize requests from all apps. You'll probably like this.
+	name = "suppress-maximize-events",
 	match = { class = ".*" },
+
 	suppress_event = "maximize",
 })
 
 hl.window_rule({
+	-- Fix some dragging issues with XWayland
 	name = "fix-xwayland-drags",
 	match = {
 		class = "^$",
@@ -357,7 +357,25 @@ hl.window_rule({
 		fullscreen = false,
 		pin = false,
 	},
+
 	no_focus = true,
+})
+
+-- Layer rules also return a handle.
+local overlayLayerRule = hl.layer_rule({
+	name = "no-anim-overlay",
+	match = { namespace = "^my-overlay$" },
+	no_anim = true,
+})
+overlayLayerRule:set_enabled(false)
+
+-- Hyprland-run windowrule
+hl.window_rule({
+	name = "move-hyprland-run",
+	match = { class = "hyprland-run" },
+
+	move = "20 monitor_h-120",
+	float = true,
 })
 
 hl.window_rule({
