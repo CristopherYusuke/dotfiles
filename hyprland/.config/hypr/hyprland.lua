@@ -24,16 +24,17 @@ hl.monitor({
 	scale = 1.2,
 	cm = "hdr",
 	sdrbrightness = 1.2,
-	vrr = true,
+	vrr = 1,
 	sdrsaturation = 1.0,
 })
 
--- Samsung QCQ90S — 64" 4K @ 143.86Hz HDR (couch)
+-- Samsung QCQ90S (DP-1)
 hl.monitor({
 	output = "DP-1",
 	mode = "3840x2160@143.86",
 	position = "3840x0",
 	scale = 1.5,
+	bitdepth = 10,
 	cm = "hdr",
 	sdrbrightness = 1.2,
 	sdrsaturation = 1.0,
@@ -142,11 +143,18 @@ hl.config({
 
 	decoration = {
 		rounding = 4,
+		shadow = {
+			enabled = true,
+			range = 5,
+			render_power = 3,
+			color = "rgba(5e5c64ff)",
+		},
 
 		blur = {
 			enabled = true,
 			size = 8,
 			passes = 2,
+			vibrancy = 0.9,
 		},
 	},
 
@@ -207,6 +215,7 @@ hl.animation({ leaf = "borderangle", enabled = true, speed = 30, bezier = "linea
 -- Apps
 hl.bind(mainMod .. " + return", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + space", hl.dsp.exec_cmd(menu))
+hl.bind(mainMod .. " + A", hl.dsp.exec_cmd("~/.config/bin/audio-input.sh"))
 hl.bind(mainMod .. " + C", hl.dsp.window.close())
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
