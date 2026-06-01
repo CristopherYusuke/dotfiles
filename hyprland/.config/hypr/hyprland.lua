@@ -147,7 +147,6 @@ hl.config({
 			enabled = true,
 			size = 8,
 			passes = 2,
-			new_optimizations = true,
 		},
 	},
 
@@ -382,4 +381,11 @@ hl.window_rule({
 	name = "inhibit-idle-fullscreen",
 	match = { fullscreen = true },
 	idle_inhibit = "fullscreen",
+})
+
+-- Kitty: delegate opacity to Hyprland so compositor blur applies
+hl.window_rule({
+	name = "kitty-opacity",
+	match = { class = "kitty" },
+	opacity = "0.90 override 0.85 override",
 })
