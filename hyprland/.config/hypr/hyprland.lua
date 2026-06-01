@@ -152,9 +152,27 @@ hl.config({
 
 		blur = {
 			enabled = true,
-			size = 8,
+			size = 4,
 			passes = 2,
 			vibrancy = 0.9,
+		},
+	},
+
+	group = {
+		col = {
+			border_active = { colors = { mocha.mauve, mocha.flamingo }, angle = 90 },
+			border_inactive = mocha.subtext0,
+			border_locked_active = { colors = { mocha.red, mocha.maroon }, angle = 90 },
+		},
+
+		groupbar = {
+			font_family = "JetBrainsMono Nerd Font",
+			font_size = 14,
+			gradients = true,
+			col = {
+				active = mocha.mauve,
+				inactive = mocha.surface1,
+			},
 		},
 	},
 
@@ -165,30 +183,6 @@ hl.config({
 
 	dwindle = {
 		preserve_split = true,
-	},
-})
-
--- ==================
--- GROUPS
--- ==================
-
-hl.config({
-	group = {
-		col = {
-			border_active = { colors = { mocha.mauve, mocha.flamingo }, angle = 90 },
-			border_inactive = mocha.subtext0,
-			border_locked_active = { colors = { mocha.red, mocha.maroon }, angle = 90 },
-		},
-
-		groupbar = {
-			font_family = "JetBrainsMono Nerd Font",
-			font_size = 10,
-			gradients = true,
-			col = {
-				active = mocha.mauve,
-				inactive = mocha.surface1,
-			},
-		},
 	},
 })
 
