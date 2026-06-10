@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # 1. Filtra as saídas que você usa e limpa espaços extras no início
-devices=$(wpctl status | sed -n '/Sinks:/,/^$/p' | grep -E "AD103.*Pro |AD103.*Pro 7|USB Audio Analog Stereo" | sed 's/\*//g' | sed 's/^[ \t]*//')
+devices=$(wpctl status | sed -n '/Sinks:/,/^$/p' | grep -E "AD103.*Pro |AD103.*Pro 7|USB Audio Speakers" | sed 's/\*//g' | sed 's/^[ \t]*//')
 
 # 2. Abre o Wofi
 selected=$(echo "$devices" | wofi --dmenu --prompt "Escolher Saída de Áudio:" --width 800 --height 400)

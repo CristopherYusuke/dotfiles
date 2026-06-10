@@ -7,6 +7,11 @@
 -- VARIABLES
 -- ==================
 
+-- Add these at the top of your hyprland.lua file
+hl.env("ELECTRON_OZONE_PLATFORM_HINT", "auto")
+hl.env("GBM_BACKEND", "nvidia-drm")
+hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
+
 local mainMod = "SUPER"
 local secondMod = "SHIFT + SUPER"
 local terminal = "kitty"
@@ -152,7 +157,7 @@ hl.config({
 
 		blur = {
 			enabled = true,
-			size = 4,
+			size = 8,
 			passes = 2,
 			vibrancy = 0.9,
 		},
@@ -375,7 +380,6 @@ overlayLayerRule:set_enabled(false)
 hl.window_rule({
 	name = "move-hyprland-run",
 	match = { class = "hyprland-run" },
-
 	move = "20 monitor_h-120",
 	float = true,
 })
@@ -390,5 +394,5 @@ hl.window_rule({
 hl.window_rule({
 	name = "kitty-opacity",
 	match = { class = "kitty" },
-	opacity = "0.90 override 0.85 override",
+	opacity = "0.80 override 0.80 override",
 })
