@@ -1,51 +1,47 @@
-return {
+return { -- Highlight, edit, and navigate code
 	"nvim-treesitter/nvim-treesitter",
 	build = ":TSUpdate",
-	-- Removemos o 'main' e o 'opts' automático para evitar conflitos de carregamento
-	config = function()
-		-- Tentamos carregar o módulo antigo ou o novo
-		local status_ok, configs = pcall(require, "nvim-treesitter.configs")
-		if not status_ok then
-			-- Se o módulo 'configs' não existe, tentamos o carregamento direto
-			-- Algumas versões novas usam apenas o setup do próprio plugin
-			configs = require("nvim-treesitter")
-		end
-
-		configs.setup({
-			ensure_installed = {
-				"lua",
-				"javascript",
-				"typescript",
-				"vim",
-				"vimdoc", -- Essencial para não dar erro de ajuda
-				"regex",
-				"dockerfile",
-				"json",
-				"gitignore",
-				"git_config",
-				"gitcommit",
-				"git_rebase",
-				"gitattributes",
-				"graphql",
-				"yaml",
-				"make",
-				"cmake",
-				"markdown",
-				"markdown_inline",
-				"tsx",
-				"css",
-				"html",
-			},
-			auto_install = true,
-			highlight = {
-				enable = true,
-				additional_vim_regex_highlighting = { "ruby" },
-			},
-			indent = { 
-				enable = true, 
-				disable = { "ruby" } 
-			},
-		})
-	end,
+	main = "nvim-treesitter.configs", -- Sets main module to use for opts
+	-- [[ Configure Treesitter ]] See `:help nvim-treesitter`
+	opts = {
+		ensure_installed = {
+			"lua",
+			"javascript",
+			"typescript",
+			"vim",
+			"regex",
+			"dockerfile",
+			"json",
+			"gitignore",
+			"git_config",
+			"gitcommit",
+			"git_rebase",
+			"gitattributes",
+			"graphql",
+			"yaml",
+			"make",
+			"cmake",
+			"markdown",
+			"markdown_inline",
+			"tsx",
+			"css",
+			"html",
+		},
+		-- Autoinstall languages that are not installed
+		auto_install = true,
+		highlight = {
+			enable = true,
+			-- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
+			--  If you are experiencing weird indenting issues, add the language to
+			--  the list of additional_vim_regex_highlighting and disabled languages for indent.
+			additional_vim_regex_highlighting = { "ruby" },
+		},
+		indent = { enable = true, disable = { "ruby", "javascript", "typescript", "tsx" } },
+	},
+	-- There are additional nvim-treesitter modules that you can use to interact
+	-- with nvim-treesitter. You should go explore a few and see what interests you:
+	--
+	--    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
+	--    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
+	--    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 }
-

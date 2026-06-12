@@ -23,7 +23,7 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", opts)
 
 -- find and center
 vim.keymap.set("n", "n", "nzzzv", opts)
-vim.keymap.set("n", "N", "nzzzv", opts)
+vim.keymap.set("n", "N", "Nzzzv", opts)
 
 -- resize with arrows
 vim.keymap.set("n", "<S-C-Up>", ":resize -2<CR>", opts)
@@ -73,5 +73,5 @@ vim.keymap.set("n", "]d", function()
 	vim.diagnostic.jump({ count = 1, float = true })
 end, { desc = "Go to next diagnostic message" })
 
-vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Open floating diagnostic messsage" })
+vim.keymap.set("n", "<leader>dm", vim.diagnostic.open_float, { desc = "Open floating diagnostic messsage" })
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic list" })

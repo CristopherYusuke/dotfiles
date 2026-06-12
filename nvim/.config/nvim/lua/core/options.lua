@@ -36,6 +36,10 @@ vim.o.completeopt = "menuone,noselect"
 vim.wo.number = true
 vim.wo.signcolumn = "yes"
 vim.opt.termguicolors = true
+vim.opt.smartindent = true
+vim.opt.autoindent = true
+vim.opt.shiftwidth = 2 -- Number of spaces used for each step of indent
+vim.opt.expandtab = true -- Converts tabs to spaces
 vim.opt.shortmess:append("c")
 vim.opt.iskeyword:append("-")
 vim.opt.formatoptions:remove({ "c", "r", "o" })
