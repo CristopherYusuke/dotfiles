@@ -10,6 +10,10 @@ fish_vi_key_bindings
 set -gx GTK_IM_MODULE cedilla
 set -gx QT_IM_MODULE cedilla
 
+
+set -Ux SYSTEMD_EDITOR vim
+set -Ux EDITOR vim
+
 if status is-interactive
     # Input methods
 
