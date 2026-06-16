@@ -11,6 +11,9 @@
 hl.env("ELECTRON_OZONE_PLATFORM_HINT", "auto")
 hl.env("GBM_BACKEND", "nvidia-drm")
 hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
+-- Force proper pointer constraints and environment mapping for XWayland apps
+hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
+hl.env("SDL_VIDEODRIVER", "wayland,x11")
 
 local mainMod = "SUPER"
 local secondMod = "SHIFT + SUPER"
