@@ -17,6 +17,8 @@ hl.env("SDL_VIDEODRIVER", "wayland,x11")
 
 local mainMod = "SUPER"
 local secondMod = "SHIFT + SUPER"
+local thirdMod = "SUPER + ALT"
+local forthMod = "SHIFT + CTRL"
 local terminal = "kitty"
 local menu = "wofi --show drun"
 
@@ -25,13 +27,13 @@ local menu = "wofi --show drun"
 -- ==================
 
 -- LG TV SSCR2 — 72" 4K @ 119.88Hz HDR (principal)
+
 hl.monitor({
 	output = "HDMI-A-1",
 	mode = "3840x2160@119.88",
 	position = "0x0",
-	scale = 1.2,
-	cm = "hdr",
-	sdrbrightness = 1.2,
+	scale = 1,
+	sdrbrightness = 1,
 	vrr = 1,
 	sdrsaturation = 1.0,
 })
@@ -54,10 +56,17 @@ hl.monitor({
 
 hl.on("hyprland.start", function()
 	hl.exec_cmd("hyprctl setcursor catppuccin-mocha-dark-cursors 28")
-	hl.exec_cmd("waybar")
-	hl.exec_cmd("swaync")
-	hl.exec_cmd("hyprpaper")
-	hl.exec_cmd("hypridle")
+	local apps = {
+		"waybar",
+		"swaync",
+		"hyprpaper",
+		"hypridle",
+		"hyprpolkitagent",
+		"env LD_PRELOAD=/usr/lib32/libextest.so steam",
+	}
+	for _, app in ipairs(apps) do
+		hl.exec_cmd(app)
+	end
 end)
 
 -- ==================
@@ -218,7 +227,7 @@ hl.animation({ leaf = "borderangle", enabled = true, speed = 30, bezier = "linea
 hl.bind(mainMod .. " + return", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + space", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + A", hl.dsp.exec_cmd("~/.config/bin/audio-input.sh"))
-hl.bind(mainMod .. " + C", hl.dsp.window.close())
+hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
@@ -247,9 +256,17 @@ hl.bind(mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
 
 -- Move windows
 hl.bind(secondMod .. " + left", hl.dsp.window.move({ direction = "left" }))
-hl.bind(secondMod .. "  + right", hl.dsp.window.move({ direction = "right" }))
-hl.bind(secondMod .. "  + up", hl.dsp.window.move({ direction = "up" }))
-hl.bind(secondMod .. "  + down", hl.dsp.window.move({ direction = "down" }))
+hl.bind(secondMod .. " + right", hl.dsp.window.move({ direction = "right" }))
+hl.bind(secondMod .. " + up", hl.dsp.window.move({ direction = "up" }))
+hl.bind(secondMod .. " + down", hl.dsp.window.move({ direction = "down" }))
+
+-- Move workspace
+hl.bind(thirdMod .. " + left", hl.dsp.focus({ workspace = "-1" }))
+hl.bind(thirdMod .. " + right", hl.dsp.focus({ workspace = "+1" }))
+
+-- Move monitor
+hl.bind(forthMod .. " + left", hl.dsp.focus({ monitor = "HDMI-A-1" }))
+hl.bind(forthMod .. " + right", hl.dsp.focus({ monitor = "DP-1" }))
 
 -- Resize submap
 -- Switch to a submap called `resize`.
@@ -284,6 +301,8 @@ hl.bind(mainMod .. " + F3", hl.dsp.focus({ workspace = 12 }))
 hl.bind(secondMod .. " + F1", hl.dsp.window.move({ workspace = 10 }))
 hl.bind(secondMod .. " + F2", hl.dsp.window.move({ workspace = 11 }))
 hl.bind(secondMod .. " + F3", hl.dsp.window.move({ workspace = 12 }))
+
+--- workspaces next ;;
 
 -- ==================
 -- WORKSPACES
