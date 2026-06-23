@@ -17,8 +17,9 @@ hl.env("SDL_VIDEODRIVER", "wayland,x11")
 
 local mainMod = "SUPER"
 local secondMod = "SHIFT + SUPER"
-local thirdMod = "SUPER + ALT"
-local forthMod = "SHIFT + CTRL"
+local thirdMod = "ALT + SUPER"
+local fourthMod = "CTRL + SUPER"
+local fifthMod = "SHIFT + CTRL"
 local terminal = "kitty"
 local menu = "wofi --show drun"
 
@@ -264,9 +265,13 @@ hl.bind(secondMod .. " + down", hl.dsp.window.move({ direction = "down" }))
 hl.bind(thirdMod .. " + left", hl.dsp.focus({ workspace = "-1" }))
 hl.bind(thirdMod .. " + right", hl.dsp.focus({ workspace = "+1" }))
 
+--- Move windows workspace
+hl.bind(fourthMod .. " + left", hl.dsp.window.move({ workspace = "-1" }))
+hl.bind(fourthMod .. " + right", hl.dsp.window.move({ workspace = "+1" }))
+
 -- Move monitor
-hl.bind(forthMod .. " + left", hl.dsp.focus({ monitor = "HDMI-A-1" }))
-hl.bind(forthMod .. " + right", hl.dsp.focus({ monitor = "DP-1" }))
+hl.bind(fifthMod .. " + left", hl.dsp.focus({ monitor = "HDMI-A-1" }))
+hl.bind(fifthMod .. " + right", hl.dsp.focus({ monitor = "DP-1" }))
 
 -- Resize submap
 -- Switch to a submap called `resize`.
@@ -346,7 +351,7 @@ hl.bind(mainMod .. " + G", hl.dsp.group.toggle())
 
 -- Cycle through group tabs (Forward / Backward)
 hl.bind(mainMod .. " + tab", hl.dsp.group.next())
-hl.bind(mainMod .. " + SHIFT + tab", hl.dsp.group.prev())
+hl.bind(mainMod .. " + tab", hl.dsp.group.prev())
 
 -- Lock a group to prevent other windows from accidentally merging into it
 hl.bind(mainMod .. " + L", hl.dsp.group.lock_active({ action = "toggle" }))
