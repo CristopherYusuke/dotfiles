@@ -351,7 +351,7 @@ hl.bind(mainMod .. " + G", hl.dsp.group.toggle())
 
 -- Cycle through group tabs (Forward / Backward)
 hl.bind(mainMod .. " + tab", hl.dsp.group.next())
-hl.bind(mainMod .. " + tab", hl.dsp.group.prev())
+hl.bind(secondMod .. " + tab", hl.dsp.group.prev())
 
 -- Lock a group to prevent other windows from accidentally merging into it
 hl.bind(mainMod .. " + L", hl.dsp.group.lock_active({ action = "toggle" }))

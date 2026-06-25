@@ -15,7 +15,6 @@ return {
 				inline = { adapter = "ollama_local" },
 				cmd = { adapter = "ollama_local" },
 			},
-			-- UPDATED: Custom adapters must nest under the "http" table
 			adapters = {
 				http = {
 					ollama_local = function()
@@ -25,10 +24,10 @@ return {
 							},
 							schema = {
 								model = {
-									default = "qwen3.5:9b",
+									default = "gemma4:12b",
 								},
 								num_ctx = {
-									default = 16384,
+									default = 32768,
 								},
 							},
 						})
