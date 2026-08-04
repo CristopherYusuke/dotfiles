@@ -28,6 +28,7 @@ return { -- Highlight, edit, and navigate code
 			"tsx",
 			"css",
 			"html",
+			"c_sharp",
 		})
 
 		-- 2. Turn on native auto-installation for missing filetypes

@@ -138,6 +138,7 @@ return {
 			sqlls = {},
 			jsonls = {},
 			yamlls = {},
+			omnisharp = {},
 			lua_ls = {
 				settings = {
 					Lua = {
