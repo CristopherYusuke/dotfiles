@@ -31,9 +31,11 @@ local menu = "wofi --show drun"
 
 hl.monitor({
 	output = "HDMI-A-1",
-	mode = "3840x2160@119.88",
+	mode = "3840x2160@120",
 	position = "0x0",
 	scale = 1,
+	bitdepth = 10,
+	cm = "hdr",
 	sdrbrightness = 1,
 	vrr = 1,
 	sdrsaturation = 1.0,
@@ -44,7 +46,7 @@ hl.monitor({
 	output = "DP-1",
 	mode = "3840x2160@143.86",
 	position = "3840x0",
-	scale = 1.5,
+	scale = 2,
 	bitdepth = 10,
 	cm = "hdr",
 	sdrbrightness = 1.2,
@@ -168,12 +170,12 @@ hl.config({
 			color = "rgba(5e5c64ff)",
 		},
 
-		blur = {
-			enabled = true,
-			size = 8,
-			passes = 2,
-			vibrancy = 0.9,
-		},
+		-- blur = {
+		-- 	enabled = true,
+		-- 	size = 8,
+		-- 	passes = 2,
+		-- 	vibrancy = 0.9,
+		-- },
 	},
 
 	group = {
@@ -376,7 +378,6 @@ hl.window_rule({
 	-- Ignore maximize requests from all apps. You'll probably like this.
 	name = "suppress-maximize-events",
 	match = { class = ".*" },
-
 	suppress_event = "maximize",
 })
 
@@ -421,5 +422,5 @@ hl.window_rule({
 hl.window_rule({
 	name = "kitty-opacity",
 	match = { class = "kitty" },
-	opacity = "0.80 override 0.80 override",
+	opacity = "0.9 override 0.7 override",
 })
