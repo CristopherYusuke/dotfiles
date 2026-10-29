@@ -37,8 +37,8 @@ hl.monitor({
 	bitdepth = 10,
 	cm = "hdr",
 	sdrbrightness = 1,
-	vrr = 1,
 	sdrsaturation = 1.0,
+	vrr = true,
 })
 
 -- Samsung QCQ90S (DP-1)
@@ -163,18 +163,11 @@ hl.config({
 
 	decoration = {
 		rounding = 4,
-		shadow = {
-			enabled = true,
-			range = 5,
-			render_power = 3,
-			color = "rgba(5e5c64ff)",
-		},
-
-		-- blur = {
+		-- shadow = {
 		-- 	enabled = true,
-		-- 	size = 8,
-		-- 	passes = 2,
-		-- 	vibrancy = 0.9,
+		-- 	range = 5,
+		-- 	render_power = 3,
+		-- 	color = "rgba(5e5c64ff)",
 		-- },
 	},
 
@@ -214,13 +207,14 @@ hl.curve("myBezier", { type = "bezier", points = { { 0.05, 0.9 }, { 0.1, 1.05 } 
 hl.curve("fluent", { type = "bezier", points = { { 0.1, 1.0 }, { 0.0, 1.0 } } })
 hl.curve("linear", { type = "bezier", points = { { 0.0, 0.0 }, { 1.0, 1.0 } } })
 
-hl.animation({ leaf = "windows", enabled = true, speed = 6, bezier = "myBezier", style = "slide" })
-hl.animation({ leaf = "windowsOut", enabled = true, speed = 6, bezier = "myBezier", style = "popin 80%" })
+hl.animation({ leaf = "windows", enabled = true, speed = 5, bezier = "myBezier", style = "slide" })
+hl.animation({ leaf = "windowsOut", enabled = true, speed = 5, bezier = "myBezier", style = "popin 80%" })
 hl.animation({ leaf = "windowsMove", enabled = true, speed = 5, bezier = "myBezier" })
-hl.animation({ leaf = "fade", enabled = true, speed = 7, bezier = "default" })
+hl.animation({ leaf = "fade", enabled = true, speed = 5, bezier = "default" })
 hl.animation({ leaf = "fadeOut", enabled = true, speed = 5, bezier = "default" })
+
 hl.animation({ leaf = "workspaces", enabled = true, speed = 5, bezier = "fluent", style = "slide" })
-hl.animation({ leaf = "borderangle", enabled = true, speed = 30, bezier = "linear", style = "loop" })
+hl.animation({ leaf = "borderangle", enabled = true, speed = 5, bezier = "linear", style = "loop" })
 
 -- ==================
 -- KEYBINDINGS
@@ -358,17 +352,25 @@ hl.bind(secondMod .. " + tab", hl.dsp.group.prev())
 -- Lock a group to prevent other windows from accidentally merging into it
 hl.bind(mainMod .. " + L", hl.dsp.group.lock_active({ action = "toggle" }))
 
--- Move a window INTO a group in a specific direction, OR merge two groups
-hl.bind(mainMod .. " + CTRL + left", hl.dsp.window.move({ into_group = "l" }))
-hl.bind(mainMod .. " + CTRL + right", hl.dsp.window.move({ into_group = "r" }))
-hl.bind(mainMod .. " + CTRL + up", hl.dsp.window.move({ into_group = "u" }))
-hl.bind(mainMod .. " + CTRL + down", hl.dsp.window.move({ into_group = "d" }))
+-- Start a submap called "groupManager".
+hl.bind(fourthMod .. " + G", hl.dsp.submap("group"))
 
--- Move an active tab OUT of the group into a specific tiled direction
-hl.bind(secondMod .. " + CTRL + left", hl.dsp.window.move({ out_of_group = "l" }))
-hl.bind(secondMod .. " + CTRL + right", hl.dsp.window.move({ out_of_group = "r" }))
-hl.bind(secondMod .. " + CTRL + up", hl.dsp.window.move({ out_of_group = "u" }))
-hl.bind(secondMod .. " + CTRL + down", hl.dsp.window.move({ out_of_group = "d" }))
+hl.define_submap("group", function()
+	-- Move a window INTO a group in a specific direction, OR merge two groups
+	hl.bind("left", hl.dsp.window.move({ into_group = "l" }))
+	hl.bind("right", hl.dsp.window.move({ into_group = "r" }))
+	hl.bind("up", hl.dsp.window.move({ into_group = "u" }))
+	hl.bind("down", hl.dsp.window.move({ into_group = "d" }))
+
+	-- Move an active tab OUT of the group into a specific tiled direction
+	hl.bind(mainMod .. " + left", hl.dsp.window.move({ out_of_group = "l" }))
+	hl.bind(mainMod .. " + right", hl.dsp.window.move({ out_of_group = "r" }))
+	hl.bind(mainMod .. " + up", hl.dsp.window.move({ out_of_group = "u" }))
+	hl.bind(mainMod .. " + down", hl.dsp.window.move({ out_of_group = "d" }))
+
+	-- Use `reset` to go back to the global submap
+	hl.bind("escape", hl.dsp.submap("reset"))
+end)
 
 -- ==================
 -- WINDOW RULES
