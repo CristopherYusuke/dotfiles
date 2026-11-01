@@ -22,6 +22,7 @@ local fourthMod = "CTRL + SUPER"
 local fifthMod = "SHIFT + CTRL"
 local terminal = "kitty"
 local menu = "wofi --show drun"
+local fileManager = "yazi"
 
 -- ==================
 -- MONITORS
@@ -64,7 +65,7 @@ hl.on("hyprland.start", function()
 		"swaync",
 		"hyprpaper",
 		"hypridle",
-		"hyprpolkitagent",
+		"/usr/lib/hyprpolkitagent/hyprpolkitagent",
 		"env LD_PRELOAD=/usr/lib32/libextest.so steam",
 	}
 	for _, app in ipairs(apps) do
@@ -103,11 +104,6 @@ hl.config({
 			natural_scroll = true,
 		},
 	},
-})
-
-hl.device({
-	name = "epic-mouse-v1",
-	sensitivity = -0.5,
 })
 
 -- ==================
@@ -155,6 +151,10 @@ hl.config({
 		layout = "dwindle",
 		allow_tearing = false,
 
+		snap = {
+			enabled = true,
+		},
+
 		col = {
 			active_border = { colors = { mocha.mauve, mocha.flamingo }, angle = 90 },
 			inactive_border = mocha.subtext0,
@@ -163,6 +163,13 @@ hl.config({
 
 	decoration = {
 		rounding = 4,
+
+		blur = {
+			enabled = true,
+			size = 8,
+			passes = 2,
+			new_optimizations = true,
+		},
 		-- shadow = {
 		-- 	enabled = true,
 		-- 	range = 5,
@@ -205,7 +212,7 @@ hl.config({
 
 hl.curve("myBezier", { type = "bezier", points = { { 0.05, 0.9 }, { 0.1, 1.05 } } })
 hl.curve("fluent", { type = "bezier", points = { { 0.1, 1.0 }, { 0.0, 1.0 } } })
-hl.curve("linear", { type = "bezier", points = { { 0.0, 0.0 }, { 1.0, 1.0 } } })
+-- "linear" is a Hyprland built-in bezier, no need to redefine it
 
 hl.animation({ leaf = "windows", enabled = true, speed = 5, bezier = "myBezier", style = "slide" })
 hl.animation({ leaf = "windowsOut", enabled = true, speed = 5, bezier = "myBezier", style = "popin 80%" })
@@ -214,7 +221,7 @@ hl.animation({ leaf = "fade", enabled = true, speed = 5, bezier = "default" })
 hl.animation({ leaf = "fadeOut", enabled = true, speed = 5, bezier = "default" })
 
 hl.animation({ leaf = "workspaces", enabled = true, speed = 5, bezier = "fluent", style = "slide" })
-hl.animation({ leaf = "borderangle", enabled = true, speed = 5, bezier = "linear", style = "loop" })
+hl.animation({ leaf = "borderangle", enabled = true, speed = 30, bezier = "linear", style = "loop" })
 
 -- ==================
 -- KEYBINDINGS
@@ -225,16 +232,27 @@ hl.bind(mainMod .. " + return", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + space", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + A", hl.dsp.exec_cmd("~/.config/bin/audio-input.sh"))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
+hl.bind(mainMod .. " + C", hl.dsp.window.kill())
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + E", hl.dsp.layout("togglesplit"))
 hl.bind(mainMod .. " + X", hl.dsp.exec_cmd("wlogout -b 2 -L 900 -R 900"))
+hl.bind(mainMod .. " + Y", hl.dsp.exec_cmd(terminal .. " -e " .. fileManager))
 hl.bind(mainMod .. " + M", hl.dsp.exit())
 
 -- Session
-hl.bind(secondMod .. "  + l", hl.dsp.exec_cmd("hyprlock"))
-hl.bind(secondMod .. "  + R", hl.dsp.exec_cmd("hyprctl reload"))
+hl.bind(secondMod .. " + l", hl.dsp.exec_cmd("hyprlock"))
+hl.bind(secondMod .. " + R", hl.dsp.exec_cmd("hyprctl reload"))
+
+-- Monitor toggle (DP-1 TV, couch gaming)
+hl.bind(
+	secondMod .. " + T",
+	hl.dsp.exec_cmd(
+		'hyprctl keyword monitor "DP-1, 3840x2160@143.86, 3840x0, 2, bitdepth, 10, cm, hdr" && wpctl set-default 54'
+	)
+)
+hl.bind(secondMod .. " + D", hl.dsp.exec_cmd('hyprctl keyword monitor "DP-1, disable" && wpctl set-default 55'))
 
 -- Screenshots
 hl.bind("SUPER + CTRL + SHIFT + S", hl.dsp.exec_cmd("hyprshot -m window"))
@@ -244,6 +262,11 @@ hl.bind("CTRL + SHIFT + S", hl.dsp.exec_cmd('grim -g "$(slurp -d)" - | swappy -f
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("pactl set-sink-volume @DEFAULT_SINK@ +10%"), { locked = true })
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("pactl set-sink-volume @DEFAULT_SINK@ -10%"), { locked = true })
 hl.bind("XF86AudioMute", hl.dsp.exec_cmd("pactl set-sink-mute @DEFAULT_SINK@ toggle"), { locked = true })
+hl.bind(
+	"XF86AudioMicMute",
+	hl.dsp.exec_cmd("pactl set-source-mute @DEFAULT_SOURCE@ toggle"),
+	{ locked = true }
+)
 
 -- Focus
 hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
@@ -271,29 +294,30 @@ hl.bind(fifthMod .. " + right", hl.dsp.focus({ monitor = "DP-1" }))
 
 -- Resize submap
 -- Switch to a submap called `resize`.
-hl.bind(mainMod .. "+ r ", hl.dsp.submap("resize"))
+hl.bind(mainMod .. " + R", hl.dsp.submap("resize"))
 
 -- Start a submap called "resize".
 hl.define_submap("resize", function()
 	-- Set repeating binds for resizing the active window.
 	hl.bind("right", hl.dsp.window.resize({ x = 20, y = 0, relative = true }), { repeating = true })
 	hl.bind("left", hl.dsp.window.resize({ x = -20, y = 0, relative = true }), { repeating = true })
-	hl.bind("up", hl.dsp.window.resize({ x = 0, y = 20, relative = true }), { repeating = true })
-	hl.bind("down", hl.dsp.window.resize({ x = 0, y = -20, relative = true }), { repeating = true })
+	hl.bind("up", hl.dsp.window.resize({ x = 0, y = -20, relative = true }), { repeating = true })
+	hl.bind("down", hl.dsp.window.resize({ x = 0, y = 20, relative = true }), { repeating = true })
 
 	-- Use `reset` to go back to the global submap
 	hl.bind("escape", hl.dsp.submap("reset"))
+	hl.bind("return", hl.dsp.submap("reset"))
 end)
 
 -- Workspaces 1-9 (LG)
 for i = 1, 9 do
 	local key = tostring(i)
 	hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
-	hl.bind(secondMod .. "  + " .. key, hl.dsp.window.move({ workspace = i }))
+	hl.bind(secondMod .. " + " .. key, hl.dsp.window.move({ workspace = i }))
 end
--- Workspace 0 → workspace 1
+-- Workspace 0 → focus workspace 1; SHIFT variant moves the window to workspace 10
 hl.bind(mainMod .. " + 0", hl.dsp.focus({ workspace = 1 }))
-hl.bind(secondMod .. "  + 0", hl.dsp.window.move({ workspace = 10 }))
+hl.bind(secondMod .. " + 0", hl.dsp.window.move({ workspace = 10 }))
 
 -- Workspaces Samsung (F1-F3)
 hl.bind(mainMod .. " + F1", hl.dsp.focus({ workspace = 10 }))
@@ -336,7 +360,7 @@ hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 -- Special workspace (scratchpad)
 hl.bind(mainMod .. " + S", hl.dsp.workspace.toggle_special("magic"))
-hl.bind(secondMod .. "  + S", hl.dsp.window.move({ workspace = "special:magic" }))
+hl.bind(secondMod .. " + S", hl.dsp.window.move({ workspace = "special:magic" }))
 
 -- ==================
 -- GROUPS
@@ -397,14 +421,6 @@ hl.window_rule({
 
 	no_focus = true,
 })
-
--- Layer rules also return a handle.
-local overlayLayerRule = hl.layer_rule({
-	name = "no-anim-overlay",
-	match = { namespace = "^my-overlay$" },
-	no_anim = true,
-})
-overlayLayerRule:set_enabled(false)
 
 -- Hyprland-run windowrule
 hl.window_rule({
